@@ -256,7 +256,21 @@ class VitaPlatform extends PlatformTarget
 			if (libsStr == null || libsStr == "") libsStr = "";
 			additionalLibs = libsStr.split(",").map(s -> s.trim());
 
-			var titleId = project.config.getString("vita.titleid", "LMEVITA01");
+			var titleId = "LMEVITA01";
+			if (project.defines != null && project.defines.exists("VITA_TITLE_ID"))
+			{
+				titleId = Std.string(project.defines.get("VITA_TITLE_ID"));
+			}
+			else
+			{
+				titleId = project.config.getString("vita.titleid", titleId);
+			}
+
+			var projectVersion = project.meta.version;
+			if (project.defines != null && project.defines.exists("VITA_VERSION"))
+			{
+				projectVersion = Std.string(project.defines.get("VITA_VERSION"));
+			}
 
 			var hxcppPath = Haxelib.getPath(new Haxelib("hxcpp"));
 			if (hxcppPath == null || hxcppPath == "")
@@ -280,7 +294,7 @@ class VitaPlatform extends PlatformTarget
 				projectName: project.app.file,
 				projectTitle: project.meta.title,
 				projectAuthor: project.meta.company,
-				projectVersion: project.meta.version,
+				projectVersion: projectVersion,
 				projectTitleId: titleId,
 				mainLibPath: staticLib,
 				dataPath: sceDirPath,

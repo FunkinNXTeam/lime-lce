@@ -228,7 +228,6 @@ namespace lime {
 			static bool vitaglInited = false;
 			if (!vitaglInited) {
 				vglUseCachedMem(GL_TRUE);
-				vglUseVram(GL_TRUE);
 				vglUseVramForUSSE(GL_TRUE);
 				vglUseLowPrecision(GL_TRUE);
 				vglWaitVblankStart(GL_FALSE);
